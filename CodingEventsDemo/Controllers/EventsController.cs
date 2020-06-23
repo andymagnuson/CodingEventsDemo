@@ -10,17 +10,28 @@ namespace coding_events_practice.Controllers
 {
     public class EventsController : Controller
     {
+       private static Dictionary<string, string> Events = new Dictionary<string, string>();
+        
         // GET: /<controller>/
         public IActionResult Index()
-        {
-            List<string> Events = new List<string>();
-            Events.Add("Code With Pride");
-            Events.Add("Apple WWDC");
-            Events.Add("Strange Loop");
+        {                      
 
             ViewBag.events = Events;
 
             return View();
+        }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost("/events/add")]
+        public IActionResult NewEvent(string name, string description)
+        {
+            Events.Add(name, description);
+
+            return Redirect("/Events");
         }
     }
 }
